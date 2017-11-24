@@ -1,0 +1,4 @@
+---
+- name: test
+  debug: var=ansible_version
+

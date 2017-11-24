@@ -1,0 +1,11 @@
+---
+
+- name: setup dotfiles
+  hosts: all
+  become: no
+  gather_facts: no
+  roles:
+    - shells
+#    - colors
+#    - i3wm
+#    - vim
