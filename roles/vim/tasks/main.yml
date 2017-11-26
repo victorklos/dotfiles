@@ -1,0 +1,19 @@
+---
+- name: create .vim directory
+  file:
+    path: ~/.vim/bundle
+    state: directory
+
+- name: copy vimrc
+  copy:
+    src: vimrc
+    dest: ~/.vim
+
+- name: install vim plugin manager
+  git:
+    repo: https://github.com/VundleVim/Vundle.vim
+    dest: ~/.vim/bundle/Vundle.vim
+    update: no
+
+- name: install vim plugins
+  command: vim -E -c "source ~/.vim/vimrc" -c PluginInstall -c qa

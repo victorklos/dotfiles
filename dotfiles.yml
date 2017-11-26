@@ -6,7 +6,7 @@
   gather_facts: no
   roles:
     - shells
+    - vim
 #    - colors
 #    - i3wm
-#    - vim
 #    - git

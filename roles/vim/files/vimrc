@@ -1,0 +1,244 @@
+set nocompatible              " be iMproved
+filetype off                  " required!
+
+set rtp+=~/.vim/bundle/Vundle.vim/
+call vundle#rc()
+
+" ============================================================
+"                            Vundle
+" ============================================================
+Plugin 'VundleVim/Vundle.vim'
+
+"colorschemes
+Plugin 'dsolstad/vim-wombat256i'
+
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+
+Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'tomtom/tlib_vim'
+
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-rake'
+Plugin 'tpope/vim-markdown'
+Plugin 'scrooloose/syntastic'
+Plugin 'vim-scripts/loremipsum'
+Plugin 'mileszs/ack.vim'
+Plugin 'aklt/plantuml-syntax'
+Plugin 'jcf/vim-latex'
+Plugin 'kien/ctrlp.vim'
+Plugin 'fatih/vim-go'
+Plugin 'file:///home/victor/maint/vim-youcompleteme'
+Plugin 'pearofducks/ansible-vim'
+Plugin 'vim-scripts/todo-txt.vim'
+Plugin 'hwartig/vim-seeing-is-believing'
+
+call vundle#end()
+filetype plugin indent on
+syntax on
+
+
+""""""""""""""""""""""""""""""
+" syntastic
+""""""""""""""""""""""""""""""
+let g:syntastic_javascript_checkers = ['jshint']
+
+""""""""""""""""""""""""""""""
+" airline
+""""""""""""""""""""""""""""""
+let g:airline#extensions#tabline#enabled   = 1
+let g:airline#extensions#syntastic#enabled = 1
+let g:airline#extensions#branch#enabled    = 1
+let g:airline_theme             = 'bubblegum'
+" unicode symbols
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+let g:airline_left_sep = '▶'
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = '◀'
+let g:airline_right_alt_sep = ''
+let g:airline_symbols.crypt = '🔒 '
+let g:airline_symbols.linenr = ''
+let g:airline_symbols.maxlinenr = ''
+let g:airline_symbols.branch = '⎇'
+let g:airline_symbols.paste = 'PASTE'
+let g:airline_symbols.spell = 'SPELL'
+let g:airline_symbols.notexists = 'NOTE'
+let g:airline_symbols.whitespace = 'Ξ'
+
+
+set statusline=%F%m%r%h%w\ [%{&ff}]\ %y\ [\%03.3b/0x\%02.2B]\ [%03l,%03v]\ [%l/%L\ %p%%]
+set laststatus=2
+set cursorline
+set modelines=0
+
+set tabstop=2
+set shiftwidth=2
+set softtabstop=2
+set expandtab
+
+set switchbuf=usetab,newtab
+
+set encoding=utf-8
+set scrolloff=3
+set autoindent
+set showmode
+set showcmd
+set hidden
+set wildmenu
+set wildmode=list:longest
+set visualbell
+set cursorline
+set ttyfast
+set ruler
+set backspace=indent,eol,start
+set laststatus=2
+
+" Own commands under comma, not backward slash
+let mapleader=","
+
+" Better searching / moving
+nnoremap / /\v
+vnoremap / /\v
+set ignorecase
+set smartcase
+set gdefault
+set incsearch
+set showmatch
+set hlsearch
+nnoremap <leader><space> :noh<cr>
+nnoremap <tab> %
+vnoremap <tab> %
+
+set spelllang=nl,en_gb
+set spellsuggest=12
+nnoremap <leader>sp :set spell!<cr>
+
+map <A-DOWN> gj
+map <A-UP> gk
+imap <A-DOWN> <ESC>gji
+imap <A-UP> <ESC>gki
+map <C-DOWN> 8gj
+map <C-UP> 8gk
+imap <C-DOWN> <ESC>8gji
+imap <C-UP> <ESC>8gki
+
+map <C-right> <ESC>:bn<CR>
+map <C-left> <ESC>:bp<CR>
+
+nnoremap <leader>a :Ack\ 
+
+" exit with save
+nnoremap <leader>e :wqa<ENTER>
+
+" toggle showing of invisible characters
+nmap <leader>l :set list!<cr>
+set listchars=tab:▸\ ,eol:¬
+
+" reflow paragraph with Q in normal and visual mode
+nnoremap Q gqap
+vnoremap Q gq
+
+set pastetoggle=<F2>
+nnoremap <F5> :w<CR> :silent make<CR>
+inoremap <F5> <Esc>:w<CR>:silent make<CR>
+vnoremap <F5> :<C-U>:w<CR>:silent make<CR>
+nnoremap <A-F5> :w<CR>:make<CR>
+inoremap <A-F5> <Esc>:w<CR>:make<CR>
+vnoremap <A-F5> :<C-U>:w<CR>:make<CR>
+
+" No more backups and swap
+set nobackup
+set noswapfile
+
+
+" ============================================================
+"      Enable seeing-is-believing mappings only for Ruby
+" ============================================================
+augroup seeingIsBelievingSettings
+  autocmd!
+
+  autocmd FileType ruby nmap <buffer> <Enter> <Plug>(seeing-is-believing-mark-and-run)
+  autocmd FileType ruby xmap <buffer> <Enter> <Plug>(seeing-is-believing-mark-and-run)
+
+  autocmd FileType ruby nmap <buffer> <F4> <Plug>(seeing-is-believing-mark)
+  autocmd FileType ruby xmap <buffer> <F4> <Plug>(seeing-is-believing-mark)
+  autocmd FileType ruby imap <buffer> <F4> <Plug>(seeing-is-believing-mark)
+
+  autocmd FileType ruby nmap <buffer> <F5> <Plug>(seeing-is-believing-run)
+  autocmd FileType ruby imap <buffer> <F5> <Plug>(seeing-is-believing-run)
+augroup END
+
+" ============================================================
+"                        session handling
+" ============================================================
+function! MakeSession()
+  let b:sessiondir = $HOME . "/.vim/sessions" . getcwd()
+  if (filewritable(b:sessiondir) != 2)
+    exe 'silent !mkdir -p ' b:sessiondir
+    redraw!
+  endif
+  let b:sessionfile = b:sessiondir . '/session.vim'
+  exe "mksession! " . b:sessionfile
+endfunction
+
+" Updates a session, BUT ONLY IF IT ALREADY EXISTS
+function! UpdateSession()
+  if argc()==0
+    let b:sessiondir = $HOME . "/.vim/sessions" . getcwd()
+    let b:sessionfile = b:sessiondir . "/session.vim"
+    if (filereadable(b:sessionfile))
+      exe "mksession! " . b:sessionfile
+      echo "updating session"
+    endif
+  endif
+endfunction
+
+" Loads a session if it exists
+function! LoadSession()
+  if argc() == 0
+    let b:sessiondir = $HOME . "/.vim/sessions" . getcwd()
+    let b:sessionfile = b:sessiondir . "/session.vim"
+    if (filereadable(b:sessionfile))
+      exe 'source ' b:sessionfile
+      echo "Loaded session."
+    else
+      echo "No session loaded."
+    endif
+  else
+    let b:sessionfile = ""
+    let b:sessiondir = ""
+  endif
+endfunction
+
+autocmd VimEnter * nested :call LoadSession()
+autocmd VimLeave * :call UpdateSession()
+map <leader>ms :call MakeSession()<CR>
+" ============================================================
+
+
+let g:ackprg = 'ag --nogroup --nocolor --column'
+
+"
+" ============================================================
+"                           Colors
+" ============================================================
+set colorcolumn=79
+set background=dark
+set t_Co=256
+colorscheme wombat256i
+
+if has('gui_running')
+    set guifont=Monospace\ Regular\ 12
+    nnoremap <leader>p "+gP
+    colorscheme torte
+endif
+
+"  as per http://snk.tuxfamily.org/log/vim-256color-bce.html
+if &term =~ '256color'
+  set t_ut=
+endif
+" ============================================================
+
