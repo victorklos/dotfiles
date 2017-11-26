@@ -1,4 +1,10 @@
 ---
-- name: test
-  debug: var=ansible_version
+- name: copy bash config files
+  copy:
+    src: "{{item}}"
+    dest: "~/.{{item}}"
+  with_items:
+    - profile
+    - bashrc
+    - bash_aliases
 

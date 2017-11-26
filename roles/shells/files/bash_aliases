@@ -1,0 +1,46 @@
+# aliases
+
+alias h=history
+
+alias l=less
+
+alias ls='ls --color=auto'
+alias ll='ls -l'
+alias la='ls -lA'
+
+alias cd..='cd ..'
+alias cd...='cd ../..'
+alias ..='cd ..'
+alias ...='cd ../..'
+
+alias nn='note new'
+alias ns='note search'
+
+alias p='cd ~/projects'
+
+alias acs='apt-cache show'
+alias acf='apt-cache search'
+alias lip='dpkg --get-selections'
+
+alias uu='sudo apt update && sudo apt upgrade'
+
+alias gs='git status'
+alias gl='git log'
+alias gits='git status'
+alias gitl='git log'
+
+alias be='bundle exec'
+
+alias psc='ps xaw -eo pid,user,cgroup,args'
+
+alias weer='curl wttr.in/Delft'
+alias week='date +%W'
+
+function calc {
+  awk "BEGIN { print $* ; }"
+}
+
+function mc {
+  mkdir -p $1 && cd $1
+}
+
