@@ -1,0 +1,35 @@
+# gitconfig
+
+[hub]
+  protocol = https
+[user]
+  name = {{ gituser.fullname }}
+  email = {{ gituser.email_main }}
+[credential]
+  helper = cache
+[alias]
+  co = checkout
+  athome = !git config user.email '{{ gituser.email_private }}'
+  atwork = !git config user.email '{{ gituser.email_work }}'
+  thuiswerken = config user.email '{{ gituser.email_work }}'
+  lb = log --decorate --oneline --graph --all
+  ls = log --decorate --oneline
+  undo = reset HEAD~1
+[color]
+  diff = auto
+  status = auto
+  branch = auto
+  ui = true
+[core]
+  excludesfile = ~/.gitignore
+  editor = vim
+[apply]
+  whitespace = nowarn
+[mergetool]
+  keepBackup = false
+[difftool]
+  prompt = false
+[help]
+  autocorrect = 1
+[push]
+  default = simple

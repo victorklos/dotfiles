@@ -1,0 +1,15 @@
+---
+- name: install system gitignore
+  copy:
+    src: gitignore
+    dest: ~/.gitignore
+
+- name: load gitconfig variables
+  include_vars:
+    file: gituser.yml
+    name: gituser
+
+- name: install system gitconfig
+  template:
+    src: gitconfig
+    dest: ~/.gitconfig

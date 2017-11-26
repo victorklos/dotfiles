@@ -7,6 +7,6 @@
   roles:
     - shells
     - vim
+    - git
 #    - colors
 #    - i3wm
-#    - git
