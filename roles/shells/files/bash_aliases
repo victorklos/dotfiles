@@ -33,6 +33,8 @@ alias gitl='git log'
 
 alias be='bundle exec'
 
+alias ad='ansible doc'
+
 alias psc='ps xaw -eo pid,user,cgroup,args'
 
 alias weer='curl wttr.in/Delft'
