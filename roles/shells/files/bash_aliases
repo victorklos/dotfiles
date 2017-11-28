@@ -24,12 +24,13 @@ alias lip='dpkg --get-selections'
 
 alias uu='sudo apt update && sudo apt upgrade'
 
+alias gl='git log-nice'
+alias gls='git log-simple'
 alias gs='git status'
-alias gl='git log'
-alias gls='git ls'
-alias glb='git lb'
 alias gits='git status'
 alias gitl='git log'
+alias gc='git commit -m '
+alias gac='git commit -a -m '
 
 alias be='bundle exec'
 

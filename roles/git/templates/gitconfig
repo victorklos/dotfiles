@@ -12,8 +12,8 @@
   athome = !git config user.email '{{ gituser.email_private }}'
   atwork = !git config user.email '{{ gituser.email_work }}'
   thuiswerken = config user.email '{{ gituser.email_work }}'
-  lb = log --decorate --oneline --graph --all
-  ls = log --decorate --oneline
+  log-nice = log --decorate --oneline --graph --all
+  log-simple = log --decorate --oneline
   undo = reset HEAD~1
 [color]
   diff = auto
