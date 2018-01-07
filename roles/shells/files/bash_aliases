@@ -34,7 +34,7 @@ alias gac='git commit -a -m '
 
 alias be='bundle exec'
 
-alias ad='ansible doc'
+alias ad='ansible-doc'
 
 alias psc='ps xaw -eo pid,user,cgroup,args'
 
