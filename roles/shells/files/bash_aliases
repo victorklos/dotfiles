@@ -49,3 +49,6 @@ function mc {
   mkdir -p $1 && cd $1
 }
 
+function wake {
+  wakeonlan -f <(grep -e "^# MACHINE: ${1}$" -A 1 ~/lib/machines)
+}
